@@ -26,12 +26,9 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
 
     private TodoListPresenter presenter;
 
-//    String []list = {"Hello", "Hi"};
-
     ArrayList<String> list;
 
     ArrayAdapter<String> adapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
