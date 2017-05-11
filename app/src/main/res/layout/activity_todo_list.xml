@@ -5,23 +5,23 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="com.todolist.todolist.view.TodoListActivity"
+  tools:context="com.todolist.todolist.view.todolist.TodoListActivity"
   android:orientation="vertical">
 
   <EditText
+    android:id="@+id/task"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="@string/enter_your_task"/>
 
   <Button
+    android:id="@+id/add_task_button"
+    android:text="@string/add_task"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/add_task"/>
+    android:layout_height="wrap_content"/>
 
-  <ListView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"></ListView>
-
-
-
+    <ListView
+      android:id="@+id/task_list"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"/>
 </LinearLayout>

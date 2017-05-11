@@ -2,4 +2,5 @@
   <string name="app_name">TodoList</string>
   <string name="add_task">Add Task</string>
   <string name="enter_your_task">Enter your task</string>
+  <string name="empty_task">Task Should not be empty</string>
 </resources>
