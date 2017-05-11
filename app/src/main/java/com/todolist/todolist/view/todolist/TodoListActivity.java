@@ -1,5 +1,6 @@
 package com.todolist.todolist.view.todolist;
 
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.todolist.todolist.R;
+import com.todolist.todolist.helper.DatabaseHelper;
 import com.todolist.todolist.presenter.TodoListPresenter;
 
 import java.util.ArrayList;
@@ -30,13 +32,23 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
 
     ArrayAdapter<String> adapter;
 
+    DatabaseHelper taskDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list);
         ButterKnife.bind(this);
         presenter = new TodoListPresenter(this);
+        taskDatabase = new DatabaseHelper(this);
+
         list = new ArrayList<>();
+
+        Cursor tasks = taskDatabase.getAllData();
+        while (tasks.moveToNext()) {
+            list.add(tasks.getString(1));
+        }
+
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         taskList.setAdapter(adapter);
     }
@@ -54,6 +66,7 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
     @Override
     public void addTaskToListView(String task) {
         this.task.setText("");
+        taskDatabase.insertData(task);
         list.add(task);
         adapter.notifyDataSetChanged();
     }
