@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.StringRes;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -21,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, TASK TEXT)");
+        db.execSQL("CREATE TABLE ? (ID INTEGER PRIMARY KEY AUTOINCREMENT, TASK TEXT)",  new String[] {TABLE_NAME});
     }
 
     @Override
@@ -47,5 +48,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor result = db.rawQuery("Select * from " + TABLE_NAME, null);
         return result;
+    }
+
+    public void deleteTask(String task) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.rawQuery("delete from " + TABLE_NAME + " where Task = " + "'" + task + "'" , null);
     }
 }
