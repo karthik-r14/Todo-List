@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemLongClick;
 
 public class TodoListActivity extends AppCompatActivity implements TodoListView {
     @BindView(R.id.task)
@@ -32,6 +31,8 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
     private TodoListPresenter presenter;
 
     ArrayList<String> list;
+
+    ArrayList<String> states;
 
     ArrayAdapter<String> adapter;
 
@@ -46,16 +47,32 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
         taskDatabase = new DatabaseHelper(this);
 
         list = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
-        taskList.setAdapter(adapter);
+        states = new ArrayList<>();
+        //adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         populateTaskList();
+        populateCheckboxes();
+        adapter = new CustomAdapter(this, list, states);
+        taskList.setAdapter(adapter);
         registerForContextMenu(taskList);
     }
 
     private void populateTaskList() {
         Cursor tasks = taskDatabase.getAllData();
+
+        list.removeAll(list);
+
         while (tasks.moveToNext()) {
             list.add(tasks.getString(1));
+        }
+    }
+
+    private void populateCheckboxes() {
+        Cursor checkboxState = taskDatabase.retrieveState();
+        states.removeAll(states);
+
+        while (checkboxState.moveToNext()) {
+            states.add(checkboxState.getString(0));
+            System.out.println("State = " + checkboxState.getString(0));
         }
     }
 
@@ -74,6 +91,7 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
         this.task.setText("");
         taskDatabase.insertData(task);
         populateTaskList();
+        populateCheckboxes();
         adapter.notifyDataSetChanged();
     }
 

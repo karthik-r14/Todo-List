@@ -1,12 +1,11 @@
 package com.todolist.todolist.helper;
 
+import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.StringRes;
-
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "tasklist.db";
@@ -14,6 +13,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String COL_1 = "ID";
     public static final String COL_2 = "Task";
+    public static final String COL_3 = "State";
 
 
     public DatabaseHelper(Context context) {
@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE ? (ID INTEGER PRIMARY KEY AUTOINCREMENT, TASK TEXT)",  new String[] {TABLE_NAME});
+        db.execSQL("CREATE TABLE " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASK TEXT, STATE BOOLEAN)");
     }
 
     @Override
@@ -53,5 +53,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void deleteTask(String task) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.rawQuery("delete from " + TABLE_NAME + " where Task = " + "'" + task + "'" , null);
+    }
+
+    public void storeState(boolean checked, String task) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        System.out.println("Checked : " + checked);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_3, checked);
+        db.update(TABLE_NAME, contentValues, "TASK=?", new String[]{task});
+    }
+
+    public Cursor retrieveState() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT " + COL_3 + " from " + TABLE_NAME, null);
     }
 }
