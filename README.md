@@ -1,2 +1,2 @@
 # Todo-List
-#This is an android app for listing down various tasks. 
+###This is an android app to keep track of various tasks that a person has to do.
