@@ -67,12 +67,12 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
     }
 
     private void populateCheckboxes() {
-        Cursor checkboxState = taskDatabase.retrieveState();
+        Cursor checkboxState = taskDatabase.getAllData();
         states.removeAll(states);
 
         while (checkboxState.moveToNext()) {
-            states.add(checkboxState.getString(0));
-            System.out.println("State = " + checkboxState.getString(0));
+            states.add(checkboxState.getString(2));
+            System.out.println("State = " + checkboxState.getString(2));
         }
     }
 
@@ -89,7 +89,7 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
     @Override
     public void addTaskToListView(String task) {
         this.task.setText("");
-        taskDatabase.insertData(task);
+        taskDatabase.insertData(task, "false");
         populateTaskList();
         populateCheckboxes();
         adapter.notifyDataSetChanged();

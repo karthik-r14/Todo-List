@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASK TEXT, STATE BOOLEAN)");
+        db.execSQL("CREATE TABLE " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TASK TEXT, STATE TEXT)");
     }
 
     @Override
@@ -30,10 +30,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 
-    public boolean insertData(String task) {
+    public boolean insertData(String task, String state) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2, task);
+        contentValues.put(COL_3, state);
         long result = db.insert(TABLE_NAME, null, contentValues);
         db.close();
 
@@ -59,12 +60,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         System.out.println("Checked : " + checked);
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_3, checked);
-        db.update(TABLE_NAME, contentValues, "TASK=?", new String[]{task});
-    }
-
-    public Cursor retrieveState() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT " + COL_3 + " from " + TABLE_NAME, null);
+        if(checked) {
+            contentValues.put(COL_3, 0);
+        } else {
+            contentValues.put(COL_3, 1);
+        }
+        db.update(TABLE_NAME, contentValues, "TASK=" + "'" + task + "'", null);
     }
 }

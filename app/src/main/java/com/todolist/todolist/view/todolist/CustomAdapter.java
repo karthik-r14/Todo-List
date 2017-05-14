@@ -1,6 +1,7 @@
 package com.todolist.todolist.view.todolist;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,7 +51,7 @@ public class CustomAdapter extends ArrayAdapter {
             }
         });
         task.setText(tasks.get(position));
-        if(checkboxStates.get(position) == "true") {
+        if(checkboxStates.get(position).equals("0")) {
             checkBox.setChecked(true);
         }else {
             checkBox.setChecked(false);
