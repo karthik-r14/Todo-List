@@ -2,6 +2,7 @@ package com.todolist.todolist.view.todolist;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,9 +21,9 @@ import java.util.ArrayList;
 
 
 public class CustomAdapter extends ArrayAdapter {
-    Context context;
-    ArrayList<String> tasks;
-    ArrayList<String> checkboxStates;
+    private Context context;
+    private ArrayList<String> tasks;
+    private ArrayList<String> checkboxStates;
 
     public CustomAdapter(Context context, ArrayList<String> tasks, ArrayList<String> checkboxStates) {
         super(context, R.layout.custom_listview_row, R.id.my_task ,tasks);
@@ -43,16 +44,23 @@ public class CustomAdapter extends ArrayAdapter {
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(context, String.valueOf(position), Toast.LENGTH_LONG).show();
+
                 DatabaseHelper database = new DatabaseHelper(context);
                 System.out.println("checkBox state : " + checkBox.isChecked());
                 System.out.println("task : " + task.getText().toString());
                 database.storeState(checkBox.isChecked(), task.getText().toString());
+                if(checkBox.isChecked()) {
+                    Toast.makeText(context, "Task done", Toast.LENGTH_LONG).show();
+                    task.setPaintFlags(task.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                } else {
+                    task.setPaintFlags( task.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                }
             }
         });
         task.setText(tasks.get(position));
         if(checkboxStates.get(position).equals("0")) {
             checkBox.setChecked(true);
+            task.setPaintFlags(task.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }else {
             checkBox.setChecked(false);
         }
