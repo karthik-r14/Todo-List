@@ -3,18 +3,17 @@ package com.todolist.todolist.view.todolist;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.todolist.todolist.R;
 import com.todolist.todolist.helper.DatabaseHelper;
+import com.todolist.todolist.model.UserTask;
 import com.todolist.todolist.presenter.TodoListPresenter;
 
 import java.util.ArrayList;
@@ -31,13 +30,11 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
 
     private TodoListPresenter presenter;
 
-    ArrayList<String> list;
+    private ArrayList<UserTask> userTasksList;
 
-    ArrayList<String> states;
+    private UserTaskListAdapter adapter;
 
-    CustomAdapter adapter;
-
-    DatabaseHelper taskDatabase;
+    private DatabaseHelper taskDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,34 +43,23 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
         ButterKnife.bind(this);
         presenter = new TodoListPresenter(this);
         taskDatabase = new DatabaseHelper(this);
-
-        list = new ArrayList<>();
-        states = new ArrayList<>();
+        userTasksList = new ArrayList<>();
         //adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
-        populateTaskList();
-        populateCheckboxes();
-        adapter = new CustomAdapter(this, list, states);
+        populateUserTasks();
+        adapter = new UserTaskListAdapter(this, userTasksList);
         taskList.setAdapter(adapter);
         registerForContextMenu(taskList);
     }
 
-    private void populateTaskList() {
-        Cursor tasks = taskDatabase.getAllData();
+    private void populateUserTasks() {
+        Cursor userTasks = taskDatabase.getAllUserTasks();
 
-        list.removeAll(list);
+        userTasksList.removeAll(userTasksList);
 
-        while (tasks.moveToNext()) {
-            list.add(tasks.getString(1));
-        }
-    }
-
-    private void populateCheckboxes() {
-        Cursor checkboxState = taskDatabase.getAllData();
-        states.removeAll(states);
-
-        while (checkboxState.moveToNext()) {
-            states.add(checkboxState.getString(2));
-            System.out.println("State = " + checkboxState.getString(2));
+        while (userTasks.moveToNext()) {
+            String task = userTasks.getString(1);
+            String state = userTasks.getString(2);
+            userTasksList.add(new UserTask(task, state));
         }
     }
 
@@ -90,9 +76,9 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
     @Override
     public void addTaskToListView(String task) {
         this.task.setText("");
-        taskDatabase.insertData(task, "false");
-        populateTaskList();
-        populateCheckboxes();
+
+        taskDatabase.insertTask(new UserTask(task, "false"));
+        populateUserTasks();
         adapter.notifyDataSetChanged();
     }
 
@@ -108,9 +94,8 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
                 .getMenuInfo();
         if (item.getTitle() == "DELETE") {
             Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
-            Log.d("Value", list.get(info.position));
-            taskDatabase.deleteTask(list.get(info.position));
-            list.remove(info.position);
+            taskDatabase.deleteTask(userTasksList.get(info.position).getTask());
+            userTasksList.remove(info.position);
             adapter.notifyDataSetChanged();
         }
 

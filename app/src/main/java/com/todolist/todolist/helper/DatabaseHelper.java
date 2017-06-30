@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.todolist.todolist.model.UserTask;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "tasklist.db";
     public static final String TABLE_NAME = "tasks";
@@ -30,11 +32,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 
-    public boolean insertData(String task, String state) {
+    public boolean insertTask(UserTask userTask) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2, task);
-        contentValues.put(COL_3, state);
+        contentValues.put(COL_2, userTask.getTask());
+        contentValues.put(COL_3, userTask.getState());
         long result = db.insert(TABLE_NAME, null, contentValues);
         db.close();
 
@@ -45,7 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getAllData() {
+    public Cursor getAllUserTasks() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor result = db.rawQuery("Select * from " + TABLE_NAME, null);
         return result;
@@ -53,7 +55,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void deleteTask(String task) {
         SQLiteDatabase db = this.getWritableDatabase();
-        //db.rawQuery("delete from " + TABLE_NAME + " where Task = " + "'" + task + "'" , null);
         db.delete(TABLE_NAME, "Task=?", new String[]{task});
     }
 
