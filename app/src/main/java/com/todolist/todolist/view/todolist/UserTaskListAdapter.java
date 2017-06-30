@@ -1,6 +1,7 @@
 package com.todolist.todolist.view.todolist;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,12 +22,12 @@ import java.util.ArrayList;
 
 public class UserTaskListAdapter extends ArrayAdapter {
     private Context context;
-    private ArrayList<UserTask> userTasks;
+    private ArrayList<UserTask> userTasksList;
 
-    public UserTaskListAdapter(Context context, ArrayList<UserTask> userTasks) {
-        super(context, R.layout.custom_listview_row, R.id.my_task, userTasks);
+    public UserTaskListAdapter(Context context, ArrayList<UserTask> userTasksList) {
+        super(context, R.layout.custom_listview_row, R.id.my_task, userTasksList);
         this.context = context;
-        this.userTasks = userTasks;
+        this.userTasksList = userTasksList;
     }
 
     @NonNull
@@ -37,10 +38,10 @@ public class UserTaskListAdapter extends ArrayAdapter {
         row.setLongClickable(true);
 
         final TextView task = (TextView) row.findViewById(R.id.my_task);
-        final CheckBox checkBox = (CheckBox) row.findViewById(R.id.state);
+        final CheckBox checkBox = (CheckBox) row.findViewById(R.id.checkBoxState);
 
-        task.setText(userTasks.get(position).getTask());
-        if (userTasks.get(position).getState().equals("0")) {
+        task.setText(userTasksList.get(position).getTask());
+        if (userTasksList.get(position).getCheckBoxState().equals("0")) {
             checkBox.setChecked(true);
             task.setPaintFlags(task.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
@@ -60,9 +61,39 @@ public class UserTaskListAdapter extends ArrayAdapter {
                 } else {
                     task.setPaintFlags(task.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 }
+
+                sortUserTaskListAccordingToCheckBoxState();
             }
         });
 
         return row;
+    }
+
+    private void sortUserTaskListAccordingToCheckBoxState() {
+
+        DatabaseHelper taskDatabase = new DatabaseHelper(context);
+
+        Cursor userTasks = taskDatabase.getAllUserTasks();
+
+        userTasksList.removeAll(userTasksList);
+
+        ArrayList<UserTask> checkedUserTasks = new ArrayList<>();
+        ArrayList<UserTask> uncheckedUserTask = new ArrayList<>();
+
+        while (userTasks.moveToNext()) {
+            String task = userTasks.getString(1);
+            String state = userTasks.getString(2);
+            UserTask userTask = new UserTask(task, state);
+
+            if (state.equals("0"))
+                checkedUserTasks.add(userTask);
+            else {
+                uncheckedUserTask.add(userTask);
+            }
+        }
+
+        userTasksList.addAll(checkedUserTasks);
+        userTasksList.addAll(uncheckedUserTask);
+        this.notifyDataSetChanged();
     }
 }

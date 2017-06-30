@@ -55,12 +55,21 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
         Cursor userTasks = taskDatabase.getAllUserTasks();
 
         userTasksList.removeAll(userTasksList);
+        ArrayList<UserTask> checkedUserTasks = new ArrayList<>();
+        ArrayList<UserTask> uncheckedUserTasks = new ArrayList<>();
 
         while (userTasks.moveToNext()) {
             String task = userTasks.getString(1);
             String state = userTasks.getString(2);
-            userTasksList.add(new UserTask(task, state));
+            UserTask userTask = new UserTask(task, state);
+            if (state.equals("0")) {
+                checkedUserTasks.add(userTask);
+            } else {
+                uncheckedUserTasks.add(userTask);
+            }
         }
+        userTasksList.addAll(checkedUserTasks);
+        userTasksList.addAll(uncheckedUserTasks);
     }
 
     @OnClick(R.id.add_task_button)
@@ -75,7 +84,7 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
 
     @Override
     public void addTaskToListView(String task) {
-        this.task.setText("");
+        this.task.getText().clear();
 
         taskDatabase.insertTask(new UserTask(task, "false"));
         populateUserTasks();

@@ -2,18 +2,18 @@ package com.todolist.todolist.model;
 
 public class UserTask {
     private String task;
-    private String state;
+    private String checkBoxState;
 
-    public UserTask(String task, String  state) {
+    public UserTask(String task, String checkBoxState) {
         this.task = task;
-        this.state = state;
+        this.checkBoxState = checkBoxState;
     }
 
     public String getTask() {
         return task;
     }
 
-    public String getState() {
-        return state;
+    public String getCheckBoxState() {
+        return checkBoxState;
     }
 }

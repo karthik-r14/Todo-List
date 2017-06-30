@@ -1,6 +1,5 @@
 package com.todolist.todolist.helper;
 
-import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -36,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2, userTask.getTask());
-        contentValues.put(COL_3, userTask.getState());
+        contentValues.put(COL_3, userTask.getCheckBoxState());
         long result = db.insert(TABLE_NAME, null, contentValues);
         db.close();
 
