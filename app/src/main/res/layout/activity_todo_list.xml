@@ -4,7 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@android:color/holo_green_light"
+  android:background="@android:color/background_dark"
   android:orientation="vertical"
   tools:context="com.todolist.todolist.view.todolist.TodoListActivity">
 
@@ -18,9 +18,11 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_weight="1"
+      android:gravity="top"
       android:background="@android:drawable/alert_light_frame"
       android:hint="@string/enter_your_task"
-      android:layout_gravity="center_vertical"/>
+      android:layout_gravity="center_vertical"
+      android:lines="2"/>
 
     <Button
       android:id="@+id/add_task_button"
@@ -30,7 +32,7 @@
       android:background="@drawable/button_drawable"
       android:textColor="@android:color/white"
       android:text="@string/add_task"
-      />
+      android:layout_gravity="center_vertical"/>
 
   </LinearLayout>
 

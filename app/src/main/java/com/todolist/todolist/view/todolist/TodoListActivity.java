@@ -1,9 +1,7 @@
 package com.todolist.todolist.view.todolist;
 
 import android.database.Cursor;
-import android.media.browse.MediaBrowser;
 import android.os.Bundle;
-import android.support.v4.media.MediaBrowserCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -37,7 +35,7 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
 
     ArrayList<String> states;
 
-    ArrayAdapter<String> adapter;
+    CustomAdapter adapter;
 
     DatabaseHelper taskDatabase;
 
@@ -89,7 +87,7 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
         Toast.makeText(getApplicationContext(), R.string.empty_task, Toast.LENGTH_SHORT).show();
     }
 
-        @Override
+    @Override
     public void addTaskToListView(String task) {
         this.task.setText("");
         taskDatabase.insertData(task, "false");
