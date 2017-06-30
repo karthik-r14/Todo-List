@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="com.todolist.todolist.view.todolist.TodoListActivity"
+  android:background="@android:color/holo_green_light"
   android:orientation="vertical"
-  android:background="@color/yellow">
+  tools:context="com.todolist.todolist.view.todolist.TodoListActivity">
 
-  <EditText
-    android:id="@+id/task"
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:hint="@string/enter_your_task"/>
+    android:orientation="horizontal">
 
-  <Button
-    android:id="@+id/add_task_button"
-    android:text="@string/add_task"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
-
-    <ListView
-      android:id="@+id/task_list"
+    <EditText
+      android:id="@+id/task"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"/>
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:background="@android:drawable/alert_light_frame"
+      android:hint="@string/enter_your_task"
+      android:layout_gravity="center_vertical"/>
+
+    <Button
+      android:id="@+id/add_task_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:background="@drawable/button_drawable"
+      android:textColor="@android:color/white"
+      android:text="@string/add_task"
+      />
+
+  </LinearLayout>
+
+  <ListView
+    android:id="@+id/task_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
 </LinearLayout>

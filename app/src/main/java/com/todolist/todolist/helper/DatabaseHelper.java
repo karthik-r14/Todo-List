@@ -53,7 +53,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void deleteTask(String task) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.rawQuery("delete from " + TABLE_NAME + " where Task = " + "'" + task + "'" , null);
+        //db.rawQuery("delete from " + TABLE_NAME + " where Task = " + "'" + task + "'" , null);
+        db.delete(TABLE_NAME, "Task=?", new String[]{task});
     }
 
     public void storeState(boolean checked, String task) {

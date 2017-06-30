@@ -37,6 +37,7 @@ public class CustomAdapter extends ArrayAdapter {
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.custom_listview_row, parent, false);
+        row.setLongClickable(true);
 
         final TextView task = (TextView) row.findViewById(R.id.my_task);
         final CheckBox checkBox = (CheckBox) row.findViewById(R.id.state);
