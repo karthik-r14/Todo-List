@@ -3,4 +3,6 @@
   <string name="add_task">Add Task</string>
   <string name="enter_your_task">Enter your task</string>
   <string name="empty_task">Task Should not be empty</string>
+  <string name="edit_task">Edit Task</string>
+  <string name="save">save</string>
 </resources>

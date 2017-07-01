@@ -1,11 +1,12 @@
 package com.todolist.todolist.view.dialogFragment;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.todolist.todolist.R;
@@ -30,15 +31,20 @@ public class EditTaskDialog extends DialogFragment {
         return new EditTaskDialog();
     }
 
-    @Nullable
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.edit_task_layout, container, false);
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.edit_task_layout, null);
         ButterKnife.bind(this, view);
+
         String task = getArguments().getString(TASK);
         taskPosition = getArguments().getInt(TASK_POSITION);
         editTask.setText(task);
-        return view;
+
+        builder.setView(view);
+        return builder.create();
     }
 
     @OnClick(R.id.save_button)
