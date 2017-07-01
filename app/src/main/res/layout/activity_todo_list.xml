@@ -17,27 +17,28 @@
       android:id="@+id/task"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:gravity="top"
-      android:background="@android:drawable/alert_light_frame"
-      android:hint="@string/enter_your_task"
       android:layout_gravity="center_vertical"
+      android:layout_weight="1"
+      android:background="@android:drawable/edit_text"
+      android:gravity="top"
+      android:hint="@string/enter_your_task"
       android:lines="2"/>
 
     <Button
       android:id="@+id/add_task_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical"
       android:layout_margin="5dp"
       android:background="@drawable/button_drawable"
-      android:textColor="@android:color/white"
       android:text="@string/add_task"
-      android:layout_gravity="center_vertical"/>
+      android:textColor="@android:color/white"/>
 
   </LinearLayout>
 
   <ListView
     android:id="@+id/task_list"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"/>
 </LinearLayout>
