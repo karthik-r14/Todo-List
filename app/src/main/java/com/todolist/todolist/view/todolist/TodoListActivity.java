@@ -15,6 +15,8 @@ import com.todolist.todolist.R;
 import com.todolist.todolist.helper.DatabaseHelper;
 import com.todolist.todolist.model.UserTask;
 import com.todolist.todolist.presenter.TodoListPresenter;
+import com.todolist.todolist.view.dialogFragment.EditTaskDialog;
+import com.todolist.todolist.view.dialogFragment.TranferData;
 
 import java.util.ArrayList;
 
@@ -22,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TodoListActivity extends AppCompatActivity implements TodoListView {
+public class TodoListActivity extends AppCompatActivity implements TodoListView, TranferData {
     @BindView(R.id.task)
     EditText task;
     @BindView(R.id.task_list)
@@ -92,8 +94,31 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
     }
 
     @Override
+    public void showAlertDialog(UserTask userTask, int taskPosition) {
+        EditTaskDialog editTaskDialog = EditTaskDialog.newInstance();
+        Bundle bundle = new Bundle();
+        bundle.putString(EditTaskDialog.TASK, userTask.getTask());
+        bundle.putInt(EditTaskDialog.TASK_POSITION, taskPosition);
+        editTaskDialog.setArguments(bundle);
+        editTaskDialog.show(getSupportFragmentManager(), EditTaskDialog.TAG);
+    }
+
+    @Override
+    public void deleteUserTask(String task, int taskPosition) {
+        taskDatabase.deleteTask(task);
+        userTasksList.remove(taskPosition);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showDeleteTaskToastMessage() {
+        Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0, v.getId(), 0, "EDIT");
         menu.add(0, v.getId(), 0, "DELETE");
     }
 
@@ -101,13 +126,22 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView 
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
                 .getMenuInfo();
-        if (item.getTitle() == "DELETE") {
-            Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
-            taskDatabase.deleteTask(userTasksList.get(info.position).getTask());
-            userTasksList.remove(info.position);
-            adapter.notifyDataSetChanged();
-        }
 
+        if (item.getTitle() == "DELETE") {
+            presenter.deleteUserTask(userTasksList.get(info.position).getTask(), info.position);
+        } else if (item.getTitle() == "EDIT") {
+            presenter.editUserTask(userTasksList.get(info.position), info.position);
+        }
         return true;
+    }
+
+    @Override
+    public void transfer(String updatedTask, int position) {
+        String taskState = userTasksList.get(position).getCheckBoxState();
+        String oldTask = userTasksList.get(position).getTask();
+        userTasksList.remove(position);
+        userTasksList.add(position, new UserTask(updatedTask, taskState));
+        taskDatabase.updateTask(oldTask, updatedTask);
+        adapter.notifyDataSetChanged();
     }
 }

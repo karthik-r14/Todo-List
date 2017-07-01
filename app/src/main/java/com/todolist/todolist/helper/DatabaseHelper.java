@@ -39,9 +39,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert(TABLE_NAME, null, contentValues);
         db.close();
 
-        if(result == -1) {
+        if (result == -1) {
             return false;
-        }else {
+        } else {
             return true;
         }
     }
@@ -61,11 +61,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         System.out.println("Checked : " + checked);
         ContentValues contentValues = new ContentValues();
-        if(checked) {
+        if (checked) {
             contentValues.put(COL_3, 0);
         } else {
             contentValues.put(COL_3, 1);
         }
         db.update(TABLE_NAME, contentValues, "TASK=" + "'" + task + "'", null);
+    }
+
+    public void updateTask(String oldTask, String updatedTask) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2, updatedTask);
+        db.update(TABLE_NAME, contentValues, "TASK=" + "'" + oldTask + "'", null);
     }
 }

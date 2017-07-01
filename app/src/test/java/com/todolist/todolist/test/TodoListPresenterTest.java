@@ -1,5 +1,6 @@
 package com.todolist.todolist.test;
 
+import com.todolist.todolist.model.UserTask;
 import com.todolist.todolist.presenter.TodoListPresenter;
 import com.todolist.todolist.view.todolist.TodoListView;
 
@@ -38,5 +39,22 @@ public class TodoListPresenterTest {
         presenter.validate(task);
 
         verify(view).addTaskToListView(task);
+    }
+
+    @Test
+    public void shouldDeleteUserTaskWhenDeleteMenuItemIsClicked() throws Exception {
+        presenter.deleteUserTask("Task", 1);
+
+        verify(view).deleteUserTask("Task", 1);
+        verify(view).showDeleteTaskToastMessage();
+    }
+
+    @Test
+    public void shouldShowAlertDialogWithEditTextWhenEditOptionInMenuIsSelected() throws Exception {
+        UserTask userTask = new UserTask("Task", "0");
+
+        presenter.editUserTask(userTask, 1);
+
+        verify(view).showAlertDialog(userTask, 1);
     }
 }
