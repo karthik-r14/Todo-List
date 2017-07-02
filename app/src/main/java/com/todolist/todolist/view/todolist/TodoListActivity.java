@@ -8,7 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.todolist.todolist.R;
@@ -24,11 +26,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 public class TodoListActivity extends AppCompatActivity implements TodoListView, TransferData {
     @BindView(R.id.task)
     EditText task;
     @BindView(R.id.task_list)
     ListView taskList;
+    @BindView(R.id.add_task_message)
+    LinearLayout addTaskMessage;
 
     private TodoListPresenter presenter;
 
@@ -72,6 +79,12 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView,
         }
         userTasksList.addAll(checkedUserTasks);
         userTasksList.addAll(uncheckedUserTasks);
+
+        if (userTasksList.isEmpty()) {
+            addTaskMessage.setVisibility(VISIBLE);
+        } else {
+            addTaskMessage.setVisibility(GONE);
+        }
     }
 
     @OnClick(R.id.add_task_button)
@@ -107,6 +120,11 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView,
     public void deleteUserTask(String task, int taskPosition) {
         taskDatabase.deleteTask(task);
         userTasksList.remove(taskPosition);
+
+        if (userTasksList.isEmpty()) {
+            addTaskMessage.setVisibility(VISIBLE);
+        }
+
         adapter.notifyDataSetChanged();
     }
 

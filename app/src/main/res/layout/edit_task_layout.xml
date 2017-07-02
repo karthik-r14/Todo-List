@@ -7,10 +7,9 @@
   <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_marginBottom="10dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="5dp"
     android:text="@string/edit_task"
-    android:textAllCaps="true"
     android:textColor="@android:color/black"
     android:textSize="18sp"
     android:textStyle="bold"/>
@@ -19,16 +18,18 @@
     android:id="@+id/edit_task"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:drawable/edit_text"
+    android:layout_gravity="center_vertical"
+    android:layout_weight="1"
+    android:background="@android:drawable/editbox_background_normal"
     android:gravity="top"
     android:hint="@string/enter_your_task"
     android:lines="2"/>
 
   <Button
     android:id="@+id/save_button"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
+    android:layout_gravity="center_vertical"
     android:background="@android:drawable/btn_default"
     android:backgroundTint="@android:color/holo_green_dark"
     android:text="@string/save"/>
