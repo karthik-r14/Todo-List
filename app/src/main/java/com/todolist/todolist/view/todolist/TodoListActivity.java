@@ -8,9 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.todolist.todolist.R;
@@ -35,7 +34,7 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView,
     @BindView(R.id.task_list)
     ListView taskList;
     @BindView(R.id.add_task_message)
-    LinearLayout addTaskMessage;
+    RelativeLayout addTaskMessage;
 
     private TodoListPresenter presenter;
 

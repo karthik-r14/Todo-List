@@ -8,4 +8,5 @@
   <string name="task_done_msg">Task done</string>
   <string name="delete_msg">Deleted</string>
   <string name="add_task_msg">Start Adding tasks above</string>
+  <string name="up_arrow_image">up_arrow_image</string>
 </resources>
