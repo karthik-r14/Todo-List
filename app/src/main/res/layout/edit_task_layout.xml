@@ -7,12 +7,12 @@
   <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@string/edit_task"
+    android:layout_gravity="center"
     android:layout_marginBottom="10dp"
-    android:textSize="18sp"
+    android:text="@string/edit_task"
     android:textAllCaps="true"
     android:textColor="@android:color/black"
-    android:layout_gravity="center"
+    android:textSize="18sp"
     android:textStyle="bold"/>
 
   <EditText
@@ -21,6 +21,7 @@
     android:layout_height="wrap_content"
     android:background="@android:drawable/edit_text"
     android:gravity="top"
+    android:hint="@string/enter_your_task"
     android:lines="2"/>
 
   <Button
@@ -28,7 +29,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:background="@drawable/button_drawable"
+    android:background="@android:drawable/btn_default"
+    android:backgroundTint="@android:color/holo_green_dark"
     android:text="@string/save"/>
 
 </LinearLayout>

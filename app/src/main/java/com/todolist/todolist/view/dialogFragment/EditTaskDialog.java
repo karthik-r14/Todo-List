@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.todolist.todolist.R;
 
@@ -15,8 +16,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.widget.Toast.LENGTH_LONG;
 
-public class EditTaskDialog extends DialogFragment {
+
+public class EditTaskDialog extends DialogFragment implements EditTaskDialogView {
 
     public static final String TASK = "task";
     public static final String TASK_POSITION = "task_position";
@@ -24,6 +27,7 @@ public class EditTaskDialog extends DialogFragment {
     EditText editTask;
 
     private int taskPosition;
+    private EditTaskDialogPresenter presenter;
 
     public static final String TAG = EditTaskDialog.class.getSimpleName();
 
@@ -38,6 +42,7 @@ public class EditTaskDialog extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.edit_task_layout, null);
         ButterKnife.bind(this, view);
+        presenter = new EditTaskDialogPresenter(this);
 
         String task = getArguments().getString(TASK);
         taskPosition = getArguments().getInt(TASK_POSITION);
@@ -50,8 +55,18 @@ public class EditTaskDialog extends DialogFragment {
     @OnClick(R.id.save_button)
     public void onSaveButtonClick() {
         String updatedTask = editTask.getText().toString();
+        presenter.validate(updatedTask);
+    }
+
+    @Override
+    public void showToastMessage() {
+        Toast.makeText(getContext(), R.string.empty_task, LENGTH_LONG).show();
+    }
+
+    @Override
+    public void transferTaskData(String task) {
         getDialog().dismiss();
-        TranferData tranferData = (TranferData) getActivity();
-        tranferData.transfer(updatedTask, taskPosition);
+        TransferData transferData = (TransferData) getActivity();
+        transferData.transfer(task, taskPosition);
     }
 }

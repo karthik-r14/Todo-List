@@ -30,7 +30,8 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center_vertical"
       android:layout_margin="5dp"
-      android:background="@drawable/button_drawable"
+      android:background="@android:drawable/btn_default"
+      android:backgroundTint="@android:color/holo_green_dark"
       android:text="@string/add_task"
       android:textColor="@android:color/white"/>
 

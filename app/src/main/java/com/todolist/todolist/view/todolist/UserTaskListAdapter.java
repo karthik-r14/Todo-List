@@ -19,6 +19,9 @@ import com.todolist.todolist.model.UserTask;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
+
 
 public class UserTaskListAdapter extends ArrayAdapter {
     private Context context;
@@ -48,6 +51,7 @@ public class UserTaskListAdapter extends ArrayAdapter {
             checkBox.setChecked(false);
         }
 
+
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +60,7 @@ public class UserTaskListAdapter extends ArrayAdapter {
 
                 database.storeState(checkBox.isChecked(), task.getText().toString());
                 if (checkBox.isChecked()) {
-                    Toast.makeText(context, "Task done", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, R.string.task_done_msg, Toast.LENGTH_LONG).show();
                     task.setPaintFlags(task.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 } else {
                     task.setPaintFlags(task.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
@@ -97,3 +101,4 @@ public class UserTaskListAdapter extends ArrayAdapter {
         this.notifyDataSetChanged();
     }
 }
+

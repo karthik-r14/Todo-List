@@ -5,4 +5,6 @@
   <string name="empty_task">Task Should not be empty</string>
   <string name="edit_task">Edit Task</string>
   <string name="save">save</string>
+  <string name="task_done_msg">Task done</string>
+  <string name="delete_msg">Deleted</string>
 </resources>

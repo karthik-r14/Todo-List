@@ -16,7 +16,7 @@ import com.todolist.todolist.helper.DatabaseHelper;
 import com.todolist.todolist.model.UserTask;
 import com.todolist.todolist.presenter.TodoListPresenter;
 import com.todolist.todolist.view.dialogFragment.EditTaskDialog;
-import com.todolist.todolist.view.dialogFragment.TranferData;
+import com.todolist.todolist.view.dialogFragment.TransferData;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TodoListActivity extends AppCompatActivity implements TodoListView, TranferData {
+public class TodoListActivity extends AppCompatActivity implements TodoListView, TransferData {
     @BindView(R.id.task)
     EditText task;
     @BindView(R.id.task_list)
@@ -112,7 +112,7 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView,
 
     @Override
     public void showDeleteTaskToastMessage() {
-        Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), R.string.delete_msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
