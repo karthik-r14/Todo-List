@@ -25,9 +25,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-
 public class TodoListActivity extends AppCompatActivity implements TodoListView, TransferData {
     @BindView(R.id.task)
     EditText task;
@@ -80,9 +77,9 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView,
         userTasksList.addAll(uncheckedUserTasks);
 
         if (userTasksList.isEmpty()) {
-            addTaskMessage.setVisibility(VISIBLE);
+            addTaskMessage.animate().alpha(1.0f);//fade in animation
         } else {
-            addTaskMessage.setVisibility(GONE);
+            addTaskMessage.animate().alpha(0.0f);//fade out animation
         }
     }
 
@@ -121,7 +118,7 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView,
         userTasksList.remove(taskPosition);
 
         if (userTasksList.isEmpty()) {
-            addTaskMessage.setVisibility(VISIBLE);
+            addTaskMessage.animate().alpha(1.0f);//fade in animation
         }
 
         adapter.notifyDataSetChanged();
