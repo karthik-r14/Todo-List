@@ -1,11 +1,13 @@
 package com.todolist.todolist.view.todolist;
 
+import android.animation.Animator;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -28,7 +30,7 @@ import butterknife.OnClick;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class TodoListActivity extends AppCompatActivity implements TodoListView, TransferData {
+public class TodoListActivity extends AppCompatActivity implements TodoListView, TransferData, Animation.AnimationListener {
     @BindView(R.id.task)
     EditText task;
     @BindView(R.id.task_list)
@@ -80,9 +82,9 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView,
         userTasksList.addAll(uncheckedUserTasks);
 
         if (userTasksList.isEmpty()) {
-            addTaskMessage.setVisibility(VISIBLE);
+            addTaskMessage.animate().alpha(1.0f);//fade in animation
         } else {
-            addTaskMessage.setVisibility(GONE);
+            addTaskMessage.animate().alpha(0.0f);//fade out animation
         }
     }
 
@@ -121,7 +123,7 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView,
         userTasksList.remove(taskPosition);
 
         if (userTasksList.isEmpty()) {
-            addTaskMessage.setVisibility(VISIBLE);
+            addTaskMessage.animate().alpha(1.0f);//fade in animation
         }
 
         adapter.notifyDataSetChanged();
@@ -160,5 +162,20 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView,
         userTasksList.add(position, new UserTask(updatedTask, taskState));
         taskDatabase.updateTask(oldTask, updatedTask);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 }
