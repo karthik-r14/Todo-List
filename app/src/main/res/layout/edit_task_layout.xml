@@ -32,6 +32,7 @@
     android:layout_gravity="center_vertical"
     android:background="@android:drawable/btn_default"
     android:backgroundTint="@android:color/holo_green_dark"
-    android:text="@string/save"/>
+    android:text="@string/save"
+    android:textColor="@android:color/white"/>
 
 </LinearLayout>
