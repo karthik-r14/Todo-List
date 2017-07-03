@@ -1,5 +1,6 @@
 package com.todolist.todolist.view.todolist;
 
+import android.animation.Animator;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +26,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 public class TodoListActivity extends AppCompatActivity implements TodoListView, TransferData {
+    public static final String FADE_IN = "fade_in";
+    public static final String FADE_OUT = "fade_out";
     @BindView(R.id.task)
     EditText task;
     @BindView(R.id.task_list)
@@ -40,6 +46,8 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView,
     private UserTaskListAdapter adapter;
 
     private DatabaseHelper taskDatabase;
+
+    private String animationType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +84,45 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView,
         userTasksList.addAll(checkedUserTasks);
         userTasksList.addAll(uncheckedUserTasks);
 
+        addAnimationListener();
+
         if (userTasksList.isEmpty()) {
+            animationType = FADE_IN;
             addTaskMessage.animate().alpha(1.0f);//fade in animation
         } else {
+            animationType = FADE_OUT;
             addTaskMessage.animate().alpha(0.0f);//fade out animation
         }
+    }
+
+    private void addAnimationListener() {
+        addTaskMessage.animate().setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                if (animationType.equals("fade_in")) {
+                    addTaskMessage.setVisibility(VISIBLE);
+                    animationType = "no_animation";
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (animationType.equals("fade_out")) {
+                    addTaskMessage.setVisibility(GONE);
+                    animationType = "no_animation";
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 
     @OnClick(R.id.add_task_button)
@@ -119,6 +161,7 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView,
 
         if (userTasksList.isEmpty()) {
             addTaskMessage.animate().alpha(1.0f);//fade in animation
+            animationType = FADE_IN;
         }
 
         adapter.notifyDataSetChanged();

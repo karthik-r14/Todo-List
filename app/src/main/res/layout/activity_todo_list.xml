@@ -11,6 +11,8 @@
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
     android:orientation="horizontal">
 
     <EditText
@@ -51,15 +53,16 @@
       android:id="@+id/add_task_message"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical">
+      android:orientation="vertical"
+      android:visibility="gone">
 
       <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/arrow_icon"
-        android:contentDescription="@string/up_arrow_image"/>
+        android:contentDescription="@string/up_arrow_image"
+        android:src="@drawable/arrow_icon"/>
 
       <TextView
         android:layout_width="match_parent"
