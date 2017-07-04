@@ -1,6 +1,8 @@
-package com.todolist.todolist.view.dialogFragment;
+package com.todolist.todolist.presenter;
 
-class EditTaskDialogPresenter {
+import com.todolist.todolist.view.dialogFragment.EditTaskDialogView;
+
+public class EditTaskDialogPresenter {
     private EditTaskDialogView view;
 
     public EditTaskDialogPresenter(EditTaskDialogView editTaskDialogView) {

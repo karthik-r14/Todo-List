@@ -241,8 +241,6 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView,
 
     public void hideSoftKeyboard() {
         InputMethodManager inputMethodManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (inputMethodManager.isActive()) {
-            inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-        }
+        inputMethodManager.hideSoftInputFromWindow(task.getWindowToken(), 0);
     }
 }

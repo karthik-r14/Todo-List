@@ -1,5 +1,7 @@
 package com.todolist.todolist.view.dialogFragment;
 
+import com.todolist.todolist.presenter.EditTaskDialogPresenter;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

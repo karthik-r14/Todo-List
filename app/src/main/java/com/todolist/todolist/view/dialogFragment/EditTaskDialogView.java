@@ -1,6 +1,6 @@
 package com.todolist.todolist.view.dialogFragment;
 
-interface EditTaskDialogView {
+public interface EditTaskDialogView {
     void showToastMessage();
 
     void transferTaskData(String task);

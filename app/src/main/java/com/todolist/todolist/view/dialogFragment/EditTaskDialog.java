@@ -3,7 +3,6 @@ package com.todolist.todolist.view.dialogFragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -14,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.todolist.todolist.R;
+import com.todolist.todolist.presenter.EditTaskDialogPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,8 +78,6 @@ public class EditTaskDialog extends DialogFragment implements EditTaskDialogView
 
     protected void hideSoftKeyboard() {
         InputMethodManager inputMethodManager = (InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (inputMethodManager.isActive()) {
-            inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-        }
+        inputMethodManager.hideSoftInputFromWindow(editTask.getWindowToken(), 0);
     }
 }
