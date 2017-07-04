@@ -73,7 +73,7 @@ public class EditTaskDialog extends DialogFragment implements EditTaskDialogView
         hideSoftKeyboard();
         getDialog().dismiss();
         TransferData transferData = (TransferData) getActivity();
-        transferData.transfer(task, taskPosition);
+        transferData.transfer(task.trim(), taskPosition);
     }
 
     protected void hideSoftKeyboard() {

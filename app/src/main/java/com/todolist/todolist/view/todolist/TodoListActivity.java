@@ -175,7 +175,7 @@ public class TodoListActivity extends AppCompatActivity implements TodoListView,
         this.task.getText().clear();
         hideSoftKeyboard();
 
-        taskDatabase.insertTask(new UserTask(task, "false"));
+        taskDatabase.insertTask(new UserTask(task.trim(), "false"));
         populateUserTasks();
         adapter.notifyDataSetChanged();
     }
