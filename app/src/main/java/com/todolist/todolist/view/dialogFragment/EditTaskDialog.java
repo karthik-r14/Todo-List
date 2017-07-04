@@ -2,11 +2,14 @@ package com.todolist.todolist.view.dialogFragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -49,8 +52,10 @@ public class EditTaskDialog extends DialogFragment implements EditTaskDialogView
         editTask.setText(task);
 
         builder.setView(view);
-        return builder.create();
+        Dialog dialog = builder.create();
+        return dialog;
     }
+
 
     @OnClick(R.id.save_button)
     public void onSaveButtonClick() {
@@ -65,8 +70,16 @@ public class EditTaskDialog extends DialogFragment implements EditTaskDialogView
 
     @Override
     public void transferTaskData(String task) {
+        hideSoftKeyboard();
         getDialog().dismiss();
         TransferData transferData = (TransferData) getActivity();
         transferData.transfer(task, taskPosition);
+    }
+
+    protected void hideSoftKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager.isActive()) {
+            inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 }
