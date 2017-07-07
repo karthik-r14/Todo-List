@@ -31,7 +31,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
     android:background="@android:drawable/btn_default"
-    android:backgroundTint="@android:color/holo_green_dark"
+    android:backgroundTint="@color/holoGreenDark"
     android:text="@string/save"
     android:textColor="@android:color/white"/>
 
