@@ -27,7 +27,7 @@
         android:layout_marginLeft="20dp"
         android:scaleX="1.5"
         android:scaleY="1.5"
-        android:buttonTint="@android:color/holo_green_dark"
+        android:buttonTint="@color/holoGreenDark"
         />
 
       <TextView
